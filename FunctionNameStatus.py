@@ -13,7 +13,6 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
 
   # Event handlers
   def on_selection_modified(self, view):
-    #print view.scope_name(view.sel()[0].begin())
     self.view = view
     self.wait_ms = self.wait_time
     self.wait()
