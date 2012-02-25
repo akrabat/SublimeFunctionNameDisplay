@@ -13,6 +13,7 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
 
   # Event handlers
   def on_selection_modified(self, view):
+    #print view.scope_name(view.sel()[0].begin())
     self.view = view
     self.wait_ms = self.wait_time
     self.wait()
@@ -31,6 +32,7 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
     region = view.sel()[0]
     region_row, region_col = view.rowcol(region.begin())
 
+    # Look for any classes
     s = ""
     class_regions = view.find_by_selector('entity.name.type.class')
     for r in reversed(class_regions):
@@ -38,17 +40,21 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
       if row <= region_row:
         s = view.substr(r) + "::"
 
-    function_regions = view.find_by_selector('entity.name.function')
+    # Look for any functions including PHP magic functions
+    function_regions = view.find_by_selector('entity.name.function') + view.find_by_selector('support.function.magic.php')
+    if not function_regions:
+      view.erase_status('function')
+      return
+
+    function_regions.sort()
     for r in reversed(function_regions):
       row, col = view.rowcol(r.begin())
       if row <= region_row:
         s = s + view.substr(r)
-        break
+        view.set_status('function', s)
+        return
 
-    if s == "":
-      view.erase_status('function')
-    else:
-      view.set_status('function', s)
+    view.erase_status('function')
 
 
   # wait methods so that we don't make ST2 crawl
