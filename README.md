@@ -1,5 +1,5 @@
-Sublime Status Bar Function Name
-================================
+Sublime Function Name Display
+=============================
 
 This plugin displays the current class and function name on the status bar in Sublime Text 2.
 
