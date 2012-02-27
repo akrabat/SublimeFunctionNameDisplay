@@ -18,15 +18,6 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
     else:
       self.time = now
 
-  def on_deactivated(self, view):
-    view.erase_status('function')
-
-  def on_close(self, view):
-    view.erase_status('function')
-
-  def on_activated(self, view):
-     self.display_current_class_and_function(view)
-      
   # display the current class and function name
   def display_current_class_and_function(self, view):
     if view.settings().get('is_widget'):
