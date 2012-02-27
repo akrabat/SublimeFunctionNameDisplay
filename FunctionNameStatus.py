@@ -28,6 +28,9 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
       
   # display the current class and function name
   def display_current_class_and_function(self, view):
+    if view.settings().get('is_widget'):
+      return
+
     region = view.sel()[0]
     region_row, region_col = view.rowcol(region.begin())
 
