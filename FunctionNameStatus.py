@@ -31,38 +31,39 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
   def display_current_class_and_function(self, view):
     if view.settings().get('is_widget'):
       return
+    for region in view.sel():
+      region_row, region_col = view.rowcol(region.begin())
 
-    region = view.sel()[0]
-    region_row, region_col = view.rowcol(region.begin())
+      s = ""
+      found = False
 
-    s = ""
-    found = False
-
-    # Look for any classes
-    if Pref.display_class:
-      class_regions = view.find_by_selector('entity.name.type.class')
-      for r in reversed(class_regions):
-        row, col = view.rowcol(r.begin())
-        if row <= region_row:
-          s = view.substr(r)
-          found = True
-          if Pref.display_function:
-            s += "::"
-          break;
-    
-    # Look for any functions including PHP magic functions
-    if Pref.display_function:
-      function_regions = view.find_by_selector('entity.name.function') + view.find_by_selector('support.function.magic.php')
-      if function_regions:
-        function_regions.sort()
-        for r in reversed(function_regions):
+      # Look for any classes
+      if Pref.display_class:
+        class_regions = view.find_by_selector('entity.name.type.class')
+        for r in reversed(class_regions):
           row, col = view.rowcol(r.begin())
           if row <= region_row:
-            s = s + view.substr(r)
+            s = view.substr(r)
             found = True
-            break
+            if Pref.display_function:
+              s += "::"
+            break;
 
-    if not found:
-      view.erase_status('function')
-    else:
-      view.set_status('function', s)
+      # Look for any functions including PHP magic functions
+      if Pref.display_function:
+        function_regions = view.find_by_selector('entity.name.function') + view.find_by_selector('support.function.magic.php')
+        if function_regions:
+          function_regions.sort()
+          for r in reversed(function_regions):
+            row, col = view.rowcol(r.begin())
+            if row <= region_row:
+              s = s + view.substr(r)
+              found = True
+              break
+
+      if not found:
+        view.erase_status('function')
+      else:
+        view.set_status('function', s)
+      return
+    view.erase_status('function')
