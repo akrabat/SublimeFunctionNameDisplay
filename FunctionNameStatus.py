@@ -23,7 +23,7 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
     now = time.time()
     if now - Pref.time > Pref.wait_time:
       Pref.time = now
-      self.display_current_class_and_function(view)
+      sublime.set_timeout(lambda:self.display_current_class_and_function(view), 0)
     else:
       Pref.time = now
 
