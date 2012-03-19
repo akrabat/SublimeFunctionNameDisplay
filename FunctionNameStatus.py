@@ -16,6 +16,7 @@ class Pref:
     Pref.modified          = False
 
 Pref = Pref()
+Pref.load()
 s.add_on_change('reload', lambda:Pref.load())
 
 clean_name = re.compile('^\s*(public\s+|private\s+|protected\s+|static\s+|function\s+|def\s+)+', re.I)
