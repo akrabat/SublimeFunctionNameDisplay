@@ -15,10 +15,8 @@ class Pref:
     Pref.time              = time()
     Pref.modified          = False
 
-Pref().load()
-s.add_on_change('display_class', lambda:Pref().load())
-s.add_on_change('display_function', lambda:Pref().load())
-s.add_on_change('display_arguments', lambda:Pref().load())
+Pref = Pref()
+s.add_on_change('reload', lambda:Pref.load())
 
 clean_name = re.compile('^\s*(public\s+|private\s+|protected\s+|static\s+|function\s+|def\s+)+', re.I)
 
