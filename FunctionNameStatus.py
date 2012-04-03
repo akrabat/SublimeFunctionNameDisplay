@@ -83,11 +83,18 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
             if row <= region_row:
               if Pref.display_class and s:
                 s += "::"
-              name = clean_name.sub('', view.substr(r))
+              lines = view.substr(r).splitlines()
+              name = clean_name.sub('', lines[0])
               if Pref.display_arguments:
                 s += name.strip()
               else:
-                s += name.split('(')[0].split(':')[0].strip()
+                if 'C++' in view.settings().get('syntax'):
+                  if Pref.display_class:
+                    s += name.split('(')[0].strip()
+                  else:
+                    s += name.split('(')[0].split('::')[1].strip()
+                else:
+                  s += name.split('(')[0].split(':')[0].strip()
               found = True
               break
 
