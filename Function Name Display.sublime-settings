@@ -1,4 +1,5 @@
 {
+	"display_file": false,
 	"display_class": false,
 	"display_function": true,
 	"display_arguments": false

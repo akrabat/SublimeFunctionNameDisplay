@@ -8,6 +8,7 @@ s = sublime.load_settings('Function Name Display.sublime-settings')
 
 class Pref:
   def load(self):
+    Pref.display_file      = s.get('display_file', False)
     Pref.display_class     = s.get('display_class', False)
     Pref.display_function  = s.get('display_function', True)
     Pref.display_arguments = s.get('display_arguments', False)
@@ -64,13 +65,16 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
       s = ""
       found = False
 
+      if Pref.display_file:
+         s = view.file_name() + " "
+
       # Look for any classes
       if Pref.display_class:
         class_regions = view.find_by_selector('entity.name.type.class')
         for r in reversed(class_regions):
           row, col = view.rowcol(r.begin())
           if row <= region_row:
-            s = view.substr(r)
+            s += view.substr(r)
             found = True
             break;
 
@@ -100,6 +104,8 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
 
       if not found:
         view.erase_status('function')
+        if Pref.display_file:
+          view.set_status('function', view.file_name())
       else:
         view.set_status('function', s)
       return
