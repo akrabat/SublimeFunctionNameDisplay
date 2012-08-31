@@ -1,4 +1,3 @@
-
 import sublime, sublime_plugin, thread, re
 from time import time, sleep
 
@@ -93,7 +92,7 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
                 s += name.strip()
               else:
                 if 'C++' in view.settings().get('syntax'):
-                  if Pref.display_class:
+                  if Pref.display_class or len(name.split('(')[0].split('::'))<2:
                     s += name.split('(')[0].strip()
                   else:
                     s += name.split('(')[0].split('::')[1].strip()
