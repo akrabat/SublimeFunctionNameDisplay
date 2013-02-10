@@ -41,13 +41,13 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
     def on_modified(self, view):
         Pref.time = time()
 
-    # hopefully async is a good choice
-    def on_selection_modified_async(self, view):
+    # could be async, but ST2 does not support that
+    def on_selection_modified(self, view):
         now = time()
         if now - Pref.time > Pref.wait_time:
             sublime.set_timeout(lambda:self.display_current_class_and_function(view, 'selection_modified'), 0)
         else:
-            sublime.set_timeout(lambda:self.display_current_class_and_function_delayed(view), 1000*Pref.wait_time)
+            sublime.set_timeout(lambda:self.display_current_class_and_function_delayed(view), int(1000*Pref.wait_time))
         Pref.time = now
 
     def display_current_class_and_function_delayed(self, view):
