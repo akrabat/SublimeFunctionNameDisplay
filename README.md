@@ -8,7 +8,7 @@ The recommended method of installation is via [Package Control](http://wbond.net
 
 ### Package Control
 
-* Follow instructions on [http://wbond.net/sublime_packages/package_control](http://wbond.net/sublime_packages/package_control)
+* Follow instructions on [https://sublime.wbond.net](https://sublime.wbond.net)
 * Install using Package Control: Install > Function Name Display package
 
 ### Using Git
