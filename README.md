@@ -4,7 +4,7 @@ This plugin displays the current file, class and function name on the status bar
 
 ## Installation
 
-The recommended method of installation is via [Package Control](http://wbond.net/sublime_packages/package_control). It will download upgrades to your packages automatically.
+The recommended method of installation is via [Package Control](https://sublime.wbond.net). It will download upgrades to your packages automatically.
 
 ### Package Control
 
