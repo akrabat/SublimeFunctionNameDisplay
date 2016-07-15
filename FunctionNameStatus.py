@@ -89,7 +89,7 @@ class FunctionNameStatusEventHandler(sublime_plugin.EventListener):
 
             # Look for any functions
             if Pref.display_function:
-                function_regions = view.find_by_selector('meta.function')
+                function_regions = view.find_by_selector('meta.function - meta.function.inline')
                 if function_regions:
                     for r in reversed(function_regions):
                         row, col = view.rowcol(r.begin())
